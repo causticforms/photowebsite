@@ -1,8 +1,3 @@
-
-
-
-
-
 <!doctype html>
 
 <html lang="en">
@@ -38,7 +33,14 @@
 	</head>
 
 	<body>
-
+	<!--HANDLEBARS TEMPLATE-->
+		<script id="tpl" type="text/template">
+		    {{#photos}}
+		        <img id="actual-image" src="{{photourl}}">
+		    {{/photos}}
+		</script>
+	<!--HANDLEBARS TEMPLATE-->
+	
 	<div id="header">
 	
 
@@ -73,7 +75,7 @@
 
 			<div id="i-container-inner" class="container-fluid landscape-image">
 				<div id="temp-holder">
-					<img id="actual-image" src="https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg">
+
 				</div>
 
 				<div class="image-text-box .align-text-bottom col-lg-3 .col-12 col-sm-4">
@@ -81,6 +83,9 @@
 					<p>This is a some additional information about this picture.</p>
 				</div>
 			</div>
+
+
+
 
 			<div id=image-nav>
 				<div id='image-nav-but-l' class="image-nav-but">
@@ -94,12 +99,22 @@
 	</div>
 
 
+
 	<script type="text/javascript">
+
+	var dataurl='./content.json';
 
 	var imgs = ["https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg", "https://c1.staticflickr.com/9/8569/15733526014_6d186666f8_k.jpg"];
 
+
+
 		$("document").ready(function(){
 
+
+
+
+
+		
 
 			var menuT = false;
 
@@ -246,6 +261,19 @@
 			//     .to(element, 0.2, {backgroundColor:"#004", color:"orange"}, "-=0.1")
 			//   element.animation = tl;
 			// })
+
+				// HANDLEBARS FUNCTION //https://bl.ocks.org/hugolpz/8075193
+		    //4a.function creation
+		    var slingshot = function (url,tplId) {
+		     $.getJSON(url, function(data) {
+		              var template = $(tplId).html();
+		              var stone = Handlebars.compile(template)(data);
+		              $(anchor).append(stone);
+		     });
+		  }
+		    //4b.function firing
+		    slingshot('content.json', '#tpl', '#anchor'); // since url = 'data.json' , we can use both notations.
+			// HANDLEBARS FUNCTION
 
 		});
 
