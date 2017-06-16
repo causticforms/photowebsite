@@ -16,7 +16,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.amd.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js" crossorigin="anonymous"></script>
 
@@ -33,13 +33,6 @@
 	</head>
 
 	<body>
-	<!--HANDLEBARS TEMPLATE-->
-		<script id="tpl" type="text/template">
-		    {{#photos}}
-		        <img id="actual-image" src="{{photourl}}">
-		    {{/photos}}
-		</script>
-	<!--HANDLEBARS TEMPLATE-->
 	
 	<div id="header">
 	
@@ -98,11 +91,19 @@
 		<div>
 	</div>
 
-
+	<!--HANDLEBARS TEMPLATE-->
+		<script id="tpl" type="text/template">
+		    {{#photos}}
+		        <img id="actual-image" src="{{photourl}}">
+		    {{/photos}}
+		</script>
+	<!--HANDLEBARS TEMPLATE-->
 
 	<script type="text/javascript">
 
-	var dataurl='./content.json';
+
+
+	var url='content.json';
 
 	var imgs = ["https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg", "https://c1.staticflickr.com/9/8569/15733526014_6d186666f8_k.jpg"];
 
@@ -262,18 +263,21 @@
 			//   element.animation = tl;
 			// })
 
-				// HANDLEBARS FUNCTION //https://bl.ocks.org/hugolpz/8075193
-		    //4a.function creation
-		    var slingshot = function (url,tplId) {
-		     $.getJSON(url, function(data) {
-		              var template = $(tplId).html();
-		              var stone = Handlebars.compile(template)(data);
-		              $(anchor).append(stone);
-		     });
-		  }
-		    //4b.function firing
-		    slingshot('content.json', '#tpl', '#anchor'); // since url = 'data.json' , we can use both notations.
-			// HANDLEBARS FUNCTION
+			    //4a.function creation
+			    var slingshot = function (url, tplId, anchor) {
+			     $.getJSON(url, function(data) {
+			              var template = $(tplId).html();
+			              var stone = Handlebars.compile(template)(data);
+
+			              console.log(stone)
+			              $(anchor).empty();
+			              $(anchor).append(stone);
+			     });
+			  }
+			    //4b.function firing
+			    slingshot('content.json', '#tpl', '#temp-holder'); // since url = 'data.json' , we can use both notations.
+
+
 
 		});
 
