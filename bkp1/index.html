@@ -35,22 +35,7 @@
 	<body>
 	<!--HANDLEBARS TEMPLATE-->
 		<script id="tpl" type="text/template">
-
-			<div id="main-blurbg" style="background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8) ), url('{{photourl}}') center repeat">
-
-			</div>
-
-			<div id="i-container-inner" class="container-fluid landscape-image">
-				<div id="temp-holder">
-					 <img id="actual-image" src="{{photourl}}">
-				</div>
-
-				<div class="image-text-box .align-text-bottom col-lg-3 .col-12 col-sm-4">
-					<h6>{{title}}</h6>
-					<p>{{text}}</p>
-				</div>
-			</div>
-		       
+		        <img id="actual-image" src="{{photourl}}">
 		</script>
 	<!--HANDLEBARS TEMPLATE-->
 	
@@ -81,23 +66,33 @@
 
 	<div id="main" class="container-fluid">
 
-
-		<div id=image-nav>
-			<div id='image-nav-but-l' class="image-nav-but">
-				<i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-			</div>
-			<div id='image-nav-but-r' class="image-nav-but">
-				<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-			</div>
-		</div>
-
 		<div id="i-container">
-			
+			<div id="main-blurbg">
+
+			</div>
+
+			<div id="i-container-inner" class="container-fluid landscape-image">
+				<div id="temp-holder">
+
+				</div>
+
+				<div class="image-text-box .align-text-bottom col-lg-3 .col-12 col-sm-4">
+					<h6>Heading 1</h6>
+					<p>This is a some additional information about this picture.</p>
+				</div>
+			</div>
 
 
 
 
-			
+			<div id=image-nav>
+				<div id='image-nav-but-l' class="image-nav-but">
+					<i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+				</div>
+				<div id='image-nav-but-r' class="image-nav-but">
+					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+				</div>
+			</div>
 		<div>
 	</div>
 
@@ -116,7 +111,7 @@
 	var currentImageID = 0;
 	var maxImages = 1;
 
-	var imgs = [];
+	var imgs = ["https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg", "https://c1.staticflickr.com/9/8569/15733526014_6d186666f8_k.jpg"];
 
 	function getCurrentImageData(){
 		currentImageJSON = currentSearchJSON.objects[currentImageID]
@@ -131,16 +126,17 @@
 
 	function newPhoto(direction){
 
+		
 		if(direction == "back" ){
 			currentImageID--;
-			var startP = 5
-			var endP = -5
+			var startP = 10
+			var endP = -10
 		}else{
 			if(direction == "forward"){
 				currentImageID++;
 			}
-			var startP = -5
-			var endP = 5
+			var startP = -10
+			var endP = 10
 		}
 
 		if(currentImageID>=maxImages){
@@ -154,51 +150,26 @@
 		console.log(currentImageID);
 		console.log("max: "+ maxImages);
 
-		TweenMax.to("#actual-image", 0.8, {left:startP + "%", scale:"0.8", autoAlpha:0, ease:Power4.easeIn, onComplete: function(){
+		TweenMax.to("#actual-image", 0.8, {left:startP + "%", scale:"0.5", ease:Power4.easeIn, onComplete: function(){
 
-					loadNewImage(currentImageJSON, '#tpl', '#i-container');
+					loadNewImage(currentImageJSON, '#tpl', '#temp-holder');
 
-					TweenMax.set("#actual-image", {left:endP + "%", scale:"0.8", autoAlpha:0, ease:Power4.easeOut});
-					TweenMax.to("#actual-image", 1, {left:0, scale:"1", autoAlpha:1, ease:Power4.easeOut});
+					TweenMax.set("#actual-image", {left:endP + "%", scale:"0.5", ease:Power4.easeOut});
+					TweenMax.to("#actual-image", 0.8, {left:0, scale:"1", ease:Power4.easeOut});
 			}});
 
-		// setTimeout(function(){
-		// 	$("#main-blurbg").css("background", "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("+currentImageJSON.photourl+") center repeat");
-		// 	// $("#i-container-inner").css("background-size", "contain");
-		// }, 1200)
+		setTimeout(function(){
+			$("#main-blurbg").css("background", "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("+currentImageJSON.photourl+") center repeat");
+			// $("#i-container-inner").css("background-size", "contain");
+		}, 1200)
 
-		TweenMax.to("#main-blurbg", 0.8, {autoAlpha:0, delay:0,ease:Power2.easeIn, onComplete: function(){
-
-					TweenMax.set("#main-blurbg", {autoAlpha:0,delay:0});
-					TweenMax.to("#main-blurbg", 0.6, {autoAlpha:1, delay:0, ease:Power2.easeOut});
-			}});
-
+		TweenMax.to("#main-blurbg", 0.5, {autoAlpha:0, delay:0.7,ease:Power2.easeIn});
+		TweenMax.to("#main-blurbg", 0.6, {autoAlpha:1, delay:1.2, ease:Power2.easeOut});
+	}
 
 		
-	}
 
-	function startNavControl(){
-		console.log("asd")
-		$( ".image-nav-but" ).click(function() {
-			console.log("asdsdasd")
-			if($(this).attr('id')=="image-nav-but-r"){
-				var direction = "forward";
-			}else{
-				var direction = "back";
-			}
-				newPhoto(direction);
-		});
-	}
 
-	function preload(arrayOfImages) {
-	    $(arrayOfImages).each(function(){
-	        $('<img/>')[0].src = this;
-	        // Alternatively you could use:
-	        // (new Image()).src = this;
-	    });
-	}
-
-	//preload(arrayOfImages);
 
 
 		$("document").ready(function(){
@@ -212,7 +183,14 @@
 
 
 
-
+			$( ".image-nav-but" ).click(function() {
+				if($(this).attr('id')=="image-nav-but-r"){
+					var direction = "forward";
+				}else{
+					var direction = "back";
+				}
+					newPhoto(direction);
+			});
 
 			// $( "#image-nav-but-l" ).click(function() {
 			// 	conosle.log("asd")
@@ -339,10 +317,6 @@
 			    }
 				maxImages = Object.keys(searchResults).length
 
-				for (var i = 0; i < maxImages; i++) {
-				 	$('<img/>')[0].src = searchResults[i].photourl; //preload images
-				 } 
-
 				// console.log("max: "+maxImages);
 			    // if(tagSearchResults.length>(page*5)-1){
 			    //     $('#next-page-button').show();
@@ -383,8 +357,6 @@
 				// mergeJSONAndTemplate( currentSearchJSON, '#tpl', '#temp-holder');
 
 				console.log(currentSearchJSON);
-
-				
 			}
 
 			function mergeJSONAndTemplate(processedJSON,tplId,anchor){
@@ -413,7 +385,6 @@
 			getData();
 
 
-			startNavControl()
 
 		});
 
