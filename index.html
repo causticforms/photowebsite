@@ -36,8 +36,10 @@
 	<!--HANDLEBARS TEMPLATE-->
 		<script id="tpl" type="text/template">
 
-			<div id="main-blurbg" style="background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8) ), url('{{photourl}}') center repeat">
+			<div id="main-blurbg" style="background: url('{{photourl}}') center; background-size: {{background-zoom}};">
+			</div>
 
+			<div id="main-blurbg-grad" style="background: radial-gradient( rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5) ); background-size: 100%;">
 			</div>
 
 			<div id="i-container-inner" class="container-fluid landscape-image">
@@ -158,8 +160,10 @@
 
 					loadNewImage(currentImageJSON, '#tpl', '#i-container');
 
-					TweenMax.set("#actual-image", {left:endP + "%", scale:"0.8", autoAlpha:0, ease:Power4.easeOut});
-					TweenMax.to("#actual-image", 1, {left:0, scale:"1", autoAlpha:1, ease:Power4.easeOut});
+					TweenMax.set("#actual-image", {left:endP + "%", scale:"0.8", rotation:startP/2, autoAlpha:0});//ease:Power4.easeOut
+					TweenMax.to("#actual-image", 1, {left:0, ease:Power4.easeOut}); //ease: Back.easeOut.config(1.7)
+					TweenMax.to("#actual-image", 1, {scale:"1", ease:Power2.easeOut});
+					TweenMax.to("#actual-image", 1, {autoAlpha:1, rotation:0, ease:Power2.easeOut});
 			}});
 
 		// setTimeout(function(){
