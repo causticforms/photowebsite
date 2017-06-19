@@ -116,6 +116,36 @@
 
 
 		
+<<<<<<< HEAD
+=======
+	}
+
+	function startNavControl(){
+		console.log("asd")
+		$( ".image-nav-but" ).click(function() {
+			console.log("asdsdasd")
+			if($(this).attr('id')=="image-nav-but-r"){
+				var direction = "forward";
+			}else{
+				var direction = "back";
+			}
+				newPhoto(direction);
+		});
+	}
+
+	function preload(arrayOfImages) {
+	    $(arrayOfImages).each(function(){
+	        $('<img/>')[0].src = this;
+	        // Alternatively you could use:
+	        // (new Image()).src = this;
+	    });
+	}
+
+	//preload(arrayOfImages);
+
+
+		$("document").ready(function(){
+>>>>>>> parent of 0d28815... took that preload crap out
 
 			var menuT = false;
 
