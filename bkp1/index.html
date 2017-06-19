@@ -1,0 +1,394 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>The HTML5 Herald</title>
+		<meta name="description" content="The HTML5 Herald">
+		<meta name="author" content="SitePoint">
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script><!-- online handlebars.js-->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js" crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+
+		
+		<!-- <link rel="stylesheet" href="normalize.css"> -->
+		<link rel="stylesheet" href="styles.css">
+	  <!--[if lt IE 9]>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+	  <![endif]-->
+	  <!-- <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, user-scalable=0' name='viewport' /> -->
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	</head>
+
+	<body>
+	<!--HANDLEBARS TEMPLATE-->
+		<script id="tpl" type="text/template">
+		        <img id="actual-image" src="{{photourl}}">
+		</script>
+	<!--HANDLEBARS TEMPLATE-->
+	
+	<div id="header">
+	
+
+		<div id="menu-button">
+			<span class="fa-stack fa-2x">
+				<i class="fa fa-square-o fa-stack-2x"></i>
+				<i class="fa fa-bars fa-stack-1x" aria-hidden="true"></i>
+			</span>
+		</div>
+
+		
+		<div class="menu-title">	
+			<h1>Fin Belcher | <strong>Photography</strong></h1>
+		</div>
+
+
+	</div>
+
+	<div id="menu">
+		<div class="menu-item">Insects</div>
+		<div class="menu-item">Gripe</div>
+		<div class="menu-item">Salt</div>
+		<div class="menu-item">Frogs</div>
+	</div>
+
+	<div id="main" class="container-fluid">
+
+		<div id="i-container">
+			<div id="main-blurbg">
+
+			</div>
+
+			<div id="i-container-inner" class="container-fluid landscape-image">
+				<div id="temp-holder">
+
+				</div>
+
+				<div class="image-text-box .align-text-bottom col-lg-3 .col-12 col-sm-4">
+					<h6>Heading 1</h6>
+					<p>This is a some additional information about this picture.</p>
+				</div>
+			</div>
+
+
+
+
+			<div id=image-nav>
+				<div id='image-nav-but-l' class="image-nav-but">
+					<i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+				</div>
+				<div id='image-nav-but-r' class="image-nav-but">
+					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+				</div>
+			</div>
+		<div>
+	</div>
+
+
+
+	<script type="text/javascript">
+
+	var dataurl='content.json';
+
+	var unprocessedJSON = [];
+
+	var currentSearchJSON = [];
+
+	var currentImageJSON = [];
+
+	var currentImageID = 0;
+	var maxImages = 1;
+
+	var imgs = ["https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg", "https://c1.staticflickr.com/9/8569/15733526014_6d186666f8_k.jpg"];
+
+	function getCurrentImageData(){
+		currentImageJSON = currentSearchJSON.objects[currentImageID]
+	}
+
+	function loadNewImage(jsonData,tplId,anchor){
+		var template = $(tplId).html();
+        var stone = Handlebars.compile(template)(jsonData);
+        $(anchor).empty();
+        $(anchor).append(stone);
+    }
+
+	function newPhoto(direction){
+
+		
+		if(direction == "back" ){
+			currentImageID--;
+			var startP = 10
+			var endP = -10
+		}else{
+			if(direction == "forward"){
+				currentImageID++;
+			}
+			var startP = -10
+			var endP = 10
+		}
+
+		if(currentImageID>=maxImages){
+			currentImageID = 0;
+		}else if(currentImageID<0){
+			currentImageID = maxImages-1;
+		}
+
+		getCurrentImageData();
+
+		console.log(currentImageID);
+		console.log("max: "+ maxImages);
+
+		TweenMax.to("#actual-image", 0.8, {left:startP + "%", scale:"0.5", ease:Power4.easeIn, onComplete: function(){
+
+					loadNewImage(currentImageJSON, '#tpl', '#temp-holder');
+
+					TweenMax.set("#actual-image", {left:endP + "%", scale:"0.5", ease:Power4.easeOut});
+					TweenMax.to("#actual-image", 0.8, {left:0, scale:"1", ease:Power4.easeOut});
+			}});
+
+		setTimeout(function(){
+			$("#main-blurbg").css("background", "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("+currentImageJSON.photourl+") center repeat");
+			// $("#i-container-inner").css("background-size", "contain");
+		}, 1200)
+
+		TweenMax.to("#main-blurbg", 0.5, {autoAlpha:0, delay:0.7,ease:Power2.easeIn});
+		TweenMax.to("#main-blurbg", 0.6, {autoAlpha:1, delay:1.2, ease:Power2.easeOut});
+	}
+
+		
+
+
+
+
+		$("document").ready(function(){
+
+
+
+			var menuT = false;
+
+
+
+
+
+
+			$( ".image-nav-but" ).click(function() {
+				if($(this).attr('id')=="image-nav-but-r"){
+					var direction = "forward";
+				}else{
+					var direction = "back";
+				}
+					newPhoto(direction);
+			});
+
+			// $( "#image-nav-but-l" ).click(function() {
+			// 	conosle.log("asd")
+			// 	TweenMax.to("#i-container-inner", 0.8, {left:100 + "%", scale:"0.5", ease:Power4.easeIn});
+			// 	TweenMax.set("#i-container-inner", {left:-100 + "%", delay:0.8, ease:Power4.easeOut});
+			// 	TweenMax.to("#i-container-inner", 0.8, {left:0, scale:"1", delay:0.8, ease:Power4.easeOut});
+
+
+			// 	TweenMax.to("#main-blurbg", 0.5, {autoAlpha:0, delay:0.7,ease:Power2.easeIn});
+			// 	TweenMax.to("#main-blurbg", 0.6, {autoAlpha:1, delay:1.2, ease:Power2.easeOut});
+			// });
+
+
+
+
+
+			var menuAnimating = false;
+
+			$( "#menu-button" ).click(function() {
+
+
+
+				if(menuAnimating==false){
+					animateMenu();
+				};
+				console.log(menuAnimating)
+
+
+
+				function animateMenu(){
+				
+					menuAnimating = true;
+					setTimeout(function(){menuAnimating=false}, 500)
+
+					 if(menuT==false){
+					 		TweenMax.to("#menu", 0.6, {marginLeft:0, ease:Power2.easeOut});
+					 		TweenMax.to("#menu", 0.2, {delay:0.2, autoAlpha:1, ease:Power1.easeOut});
+					 		
+					 		var tweenDelay = 0.15;
+					 		var tweenSeperation = 0.05;
+
+							TweenMax.staggerFrom(".menu-item", 0.2, {x:-50, delay:tweenDelay, ease:Power2.easeOut}, tweenSeperation);
+
+							TweenMax.staggerFrom(".menu-item", 0.3, {y:100, delay:tweenDelay+0.1, ease:Power3.easeOut}, tweenSeperation);
+
+							TweenMax.staggerFrom(".menu-item", 0.2, {autoAlpha:0, delay:tweenDelay+0.1, ease:Power2.easeOut}, tweenSeperation);
+							
+							TweenMax.staggerFrom(".menu-item", 0.2, {rotation:-180, delay:tweenDelay+0.01, ease:Power2.easeOut}, tweenSeperation);
+
+							TweenMax.staggerFrom(".menu-item", 0.4, {backgroundColor:"white", delay:tweenDelay, ease:Power3.easeOut}, tweenSeperation);
+
+					 	}else{
+
+							var tweenDelay = 0.15;
+					 		var tweenSeperation = -0.09;
+
+							TweenMax.staggerTo(".menu-item", 0.2, {autoAlpha:0, delay:0.1, ease:Power2.easeOut}, tweenSeperation);
+
+					 		TweenMax.staggerTo(".menu-item", 0.4, {y:60, delay:0, ease:Power3.easeOut}, tweenSeperation);
+
+					 		TweenMax.staggerTo(".menu-item", 0.3, {x:-100, rotation:20, delay:tweenDelay, ease:Power1.easeOut}, tweenSeperation);
+
+
+					 		 TweenMax.to("#menu", 0.4, {delay:0.1, marginLeft:-100, ease:Power2.easeIn, onComplete:resetMenu});
+					 		 TweenMax.to("#menu", 0.3, {delay:0.3, autoAlpha:0, ease:Power1.easeOut});
+
+
+					 	}
+					 	menuT = !menuT;
+					 }
+
+					});
+
+				function resetMenu(){
+					$('.menu-item').each(function(i){
+	 					TweenMax.set($(this),{clearProps:"transform", autoAlpha:1, delay:0});
+	 					TweenMax.killTweensOf(this);
+	 				});
+				}
+
+			$('.menu-item').each(function(i){
+				$(this).mouseenter(function() {
+					TweenMax.to(this, 0.2, {paddingLeft:30, color:"#f09", backgroundColor:"#454545", ease:Power1.easeOut});
+				});
+				$(this).mouseleave(function() {
+					TweenMax.to(this, 0.1, {paddingLeft:20, color:"#454545",backgroundColor:"#000000", ease:Power1.easeOut});
+				});
+			});
+
+			$("#menu-button").mouseenter(function() {
+				TweenMax.to(this, 0.1, {color:"#f09", ease:Power1.easeOut});
+			});
+
+			$("#menu-button").mouseleave(function() {
+				TweenMax.to(this, 0.1, {color:"#454545", ease:Power1.easeOut});
+			});
+// TweenMax.staggerFrom(".btn", 2, {scale:0.5, opacity:0, delay:0.5, ease:Elastic.easeOut, force3D:true}, 0.2);
+
+
+
+			//   var tl = new TimelineLite({paused:true});
+			//   tl.to(element, 0.2, {y:10, padding:20})
+			//     .to(element, 0.2, {backgroundColor:"#004", color:"orange"}, "-=0.1")
+			//   element.animation = tl;
+			// })
+
+
+
+
+			function getCurrentCatergoryData(searchTerm){
+			    var searchResults = []
+			    var searchPath = unprocessedJSON.photos
+
+			    for (var k in searchPath) {
+			      if (searchPath.hasOwnProperty(k)) { //if entry exists
+			        var stringOfTags = searchPath[k].tags //put tags for entry into var
+			        var toSplit = stringOfTags.split(","); // define splitting character
+			        for (var i = 0; i < toSplit.length; i++) { //loop through
+			            if(searchTerm==toSplit[i]){
+			                searchResults.push(searchPath[k]);
+			            }
+			        }
+			      }
+			    }
+				maxImages = Object.keys(searchResults).length
+
+				// console.log("max: "+maxImages);
+			    // if(tagSearchResults.length>(page*5)-1){
+			    //     $('#next-page-button').show();
+			    //             //showNextPrevButtons(tagSearchResults.length);
+			    // }else{
+			    //     $('#next-page-button').hide();
+			    // }
+			    // if(page<2){
+			    //    $('#prev-page-button').hide(); 
+			    // }else{
+			    //     $('#prev-page-button').show(); 
+			    // }
+
+			    // if(tagSearchResults.length>maxPostsPerPage){
+			    //     var startCut = (page*5)-5
+			    //     var endCut = startCut+maxPostsPerPage+1
+			    //     //console.log(startCut)
+			    //     tagSearchResults = tagSearchResults.slice(startCut,endCut)
+			    // }
+
+			    return {objects: searchResults}
+			}
+
+
+			function getData(){
+				dataURL = 'content.json';
+    			jsonData = $.getJSON(dataURL, processJSON);
+			}
+
+			function processJSON(JSONData){
+				unprocessedJSON = JSONData;
+
+				currentSearchJSON = getCurrentCatergoryData("blog");
+				
+
+
+				newPhoto();
+				// mergeJSONAndTemplate( currentSearchJSON, '#tpl', '#temp-holder');
+
+				console.log(currentSearchJSON);
+			}
+
+			function mergeJSONAndTemplate(processedJSON,tplId,anchor){
+	 			var template = $(tplId).html();
+	            var stone = Handlebars.compile(template)(processedJSON);
+	            $(anchor).empty();
+	            $(anchor).append(stone);
+
+	            // console.log(processedJSON);
+			}
+
+				// HANDLEBARS FUNCTION //https://bl.ocks.org/hugolpz/8075193
+		    //4a.function creation
+		  //   var slingshot = function (url,tplId,anchor) {
+		  //    $.getJSON(url, function(data) {
+		  //             var template = $(tplId).html();
+		  //             var stone = Handlebars.compile(template)(data);
+		  //             $(anchor).empty();
+		  //             $(anchor).append(stone);
+		  //    });
+		  // }
+		    //4b.function firing
+		    //slingshot(dataurl, '#tpl', '#temp-holder'); // since url = 'data.json' , we can use both notations.
+			// HANDLEBARS FUNCTION
+
+			getData();
+
+
+
+		});
+
+	</script>
+
+	</body>
+</html>

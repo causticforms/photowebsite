@@ -45,35 +45,25 @@
     height: 100%;
 }
 
-#actual-image{
-	/* box-shadow: 0px 0px 100px #000000;*/
-	will-change: transform;        /* Example of <custom-ident> */
-	will-change: opacity;
-}
-
 #main-blurbg{	
 	position:absolute; 
 	top:0px; 
 	right:0px; 
 	bottom:0px; 
 	left:0px; 
+	background:linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg);
+	background-repeat: repeat;
+	background-position:center;
 
 	/*height:auto !important; *//* cross-browser */
 	background-size: 180%
 
-	-webkit-filter: blur(20px);
-	-moz-filter: blur(20px);
-	-o-filter: blur(20px);
-	-ms-filter: blur(20px);
-	filter: blur(20px);
-}
+	-webkit-filter: blur(10px);
+	-moz-filter: blur(10px);
+	-o-filter: blur(10px);
+	-ms-filter: blur(10px);
+	filter: blur(10px);
 
-#main-blurbg-grad{	
-	position:absolute; 
-	top:0px; 
-	right:0px; 
-	bottom:0px; 
-	left:0px; 
 }
 
 #menu-button{
@@ -237,7 +227,6 @@ h1{
 	width: calc(100% - 50px);
 	/*background-color: red;*/
 	left: 25px;
-	color: white;
 }
 
 #image-nav-but-l{

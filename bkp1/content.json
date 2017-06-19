@@ -2,39 +2,34 @@
 		{
 			"title":"IMAGE 1",
 			"photourl":"https://c1.staticflickr.com/9/8682/16168354978_15c17905ce_h.jpg",
-			"background-zoom":"130%",
-			"text":"LA de da!",
+			"text":"Content text",
 			"id":"image-fun-1",
 			"tags":"one,joy,blog,showcase"
 		},
 		{
-			"title":"It's an animal of some sort",
-			"photourl":"https://c1.staticflickr.com/9/8569/15733526014_aa7cc5cf9f_c.jpg",
-			"background-zoom":"130%",
-			"text":"This is some text which relates to the photograph being shown on your screen.",
+			"title":"BLOG POST 2",
+			"photourl":"https://c1.staticflickr.com/9/8569/15733526014_6d186666f8_k.jpg",
+			"text":"Content text",
 			"id":"image-fun-1",
 			"tags":"two,lols,blog"
 		},
 		{
-			"title":"Flip me",
-			"photourl":"http://c1.staticflickr.com/9/8570/16168600790_2e42f7b1de_h.jpg",
-			"background-zoom":"130%",
-			"text":"Blah blah blah, this is some text which should explain something about the image being displayed.",
+			"title":"BLOG POST 3",
+			"photourl":"https://c1.staticflickr.com/9/8570/16168600790_283029ca66_k.jpg",
+			"text":"Content text",
 			"id":"image-fun-3",
 			"tags":"fun,lols,blog"
 		},
 		{
-			"title":"Cranges McBasketball",
-			"photourl":"https://c1.staticflickr.com/8/7347/16168357488_228493c318_b.jpg",
-			"background-zoom":"130%",
+			"title":"BLOG POST 4",
+			"photourl":"https://c1.staticflickr.com/8/7347/16168357488_3c9c9bd4c3_k.jpg",
 			"text":"Content text",
 			"id":"image-fun-4",
 			"tags":"fun,lols,blog,showcase"
 		},
 		{
 			"title":"BLOG POST 5",
-			"photourl":"https://c1.staticflickr.com/9/8633/16355087362_93e13cd2da_h.jpg",
-			"background-zoom":"130%",
+			"photourl":"https://c1.staticflickr.com/9/8633/16355087362_555acc63aa_k.jpg",
 			"text":"Content text",
 			"id":"image-fun-5",
 			"tags":"fun,lols,blog,showcase"
